@@ -1,6 +1,6 @@
 program Punto3BPractica4Parte2;
 const
-	dimF=300;
+	dimF=200;
 type
 	mes=1..31;
 	viajes=record

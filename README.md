@@ -2,4 +2,5 @@
 Conceptos de Algoritmos, Datos y Programas  
 Licenciatura en Sistemas  
 Universidad Nacional de La Plata  
-2021
+Cursada 2021  
+Ayudantía 2023

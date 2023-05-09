@@ -9,9 +9,11 @@ Realizar un programa que procese la información de los empleados, e informe:
 alcance los 1500 dólares
 ● el código del empleado que cobra el mejor sueldo en cada país
 
-Se dispone de una estructura de datos que contiene la informacion de todos los paises. Hay que recorrerla, totalizando y sacando maximos, sin leer la informacion
+Se recorre un vector de empleados (que se dispone) y se procesan todos los mismos paises con un corte de control.
 }
 program punto34x4;
+const
+    dimf = 10; // se dispone, numero aleatorio
 type
     codigosEmpleados= 1..2000;
     codigosPais= 1..25;
@@ -21,29 +23,38 @@ type
         antiguedad: integer;
         sueldo: real;
     end;
-    infoVector = record
-        cantidad:integer;
-        codigoMaximo:codigosEmpleados;
-        cantidadMenor:integer;
-    end;
-    vectorPaises = array [codigosPais] of infoVector;
-    
+    vectorEmpleados = array[codigosEmpleados] of empleado;
+
 procedure procesarInfo(v:vectorEmpleados);
 var
-    i:codigosPais;
-    totalCantidad,maxCantidad:integer;
-    maxPais:codigosPais;
+    i:codigosEmpleados;
+    cantidadPorPais,maxCantidad,cantidadMenor:integer;
+    paisActual,maxPais:codigosPais;
+    maxSueldo:real;
 begin
-    totalCantidad:=0;
-    for i := 1 to 25 do begin
-        if (v[i].cantidad>maxCantidad) then begin
-            maxCantidad:=v[i].cantidad;
-            maxPais:=i;
+    cantidadMenor:=0;
+    maxCantidad:=-1;
+    i:=1;
+    while (i<dimf) do begin //se empieza a leer el primer empleado cargado
+        paisActual:=v[i].codigoP;
+        cantidadPorPais:=0;
+        maxSueldo:=-1;
+        while ((i<dimf) and (paisActual=v[i].codigoP)) do begin // mientras no se terminen los empleados y el pais sea el mismo
+            if ((v[i].antiguedad>10) and (v[i].sueldo<1500)) then cantidadMenor+=1;
+            cantidadPorPais+=1;
+            if (v[i].sueldo>maxSueldo) then begin
+                maxSueldo:=v[i].sueldo;
+                codigoMaximo:=v[i].codigoE;
+            end;
+            i+=1;
         end;
-        totalCantidad+=v[i].cantidadMenor;
-        writeln('El codigo del empleado con mayor sueldo del pais ',i,' es: ',v[i].codigoMaximo);
+        if (cantidadPorPais>maxCantidad) then begin
+            maxCantidad:=cantidadPorPais;
+            maxPais:=paisActual;
+        end;
+        writeln('El codigo del empleado con el mejor sueldo del pais ',paisActual,' es: ',codigoMaximo);
     end;
-    writeln('La cantidad de empleados con mas de 10 anios de antiguedad y un sueldo menor de 1500 dolares es: ',totalCantidad);
+    writeln('La cantidad de empleados con mas de 10 anios de antiguedad y un sueldo menor de 1500 dolares es: ',cantidadMenor);
     writeln('El pais con mayor cantidad de empleados es: ',maxPais);
 end;
 

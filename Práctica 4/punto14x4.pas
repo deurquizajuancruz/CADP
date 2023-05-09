@@ -22,7 +22,7 @@ type
         sueldo: real;
     end;
     infoVector = record
-        cantidad:integer;
+        cantidad:codigosEmpleados;
         maximo:real;
         codigoMaximo:codigosEmpleados;
     end;

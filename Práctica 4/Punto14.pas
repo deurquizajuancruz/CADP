@@ -52,17 +52,6 @@ begin
 	horasAdministradores:=0;
 	leerDesarrollador(d);
 	while (d.codigoProyecto<>-1) do begin
-		if (d.rolProyecto=4) then v[d.codigoProyecto].cantidadArquitectos+=1;
-		if (d.rolProyecto=3) then horasAdministradores+=d.horas;
-		if (d.pais='Argentina') then begin
-			case d.rolProyecto of
-				1: montoArgentina+=d.horas*montoAnalista;
-				2: montoArgentina+=d.horas*montoProgramador;
-				3: montoArgentina+=d.horas*montoAdministradorBases;
-				4: montoArgentina+=d.horas*montoArquitecto;
-				5: montoArgentina+=d.horas*montoAdministradorRedes;
-			end;
-		end;
 		case d.rolProyecto of
 			1: v[d.codigoProyecto].montoInvertido+=d.horas*montoAnalista;
 			2: v[d.codigoProyecto].montoInvertido+=d.horas*montoProgramador;
@@ -70,6 +59,9 @@ begin
 			4: v[d.codigoProyecto].montoInvertido+=d.horas*montoArquitecto;
 			5: v[d.codigoProyecto].montoInvertido+=d.horas*montoAdministradorRedes;
 		end;
+		if (d.rolProyecto=3) then horasAdministradores+=d.horas;
+		if (d.rolProyecto=4) then v[d.codigoProyecto].cantidadArquitectos+=1;
+		if (d.pais='Argentina') then montoArgentina+=v[d.codigoProyecto].montoInvertido;
 		leerDesarrollador(d);
 	end;
 	writeln('El monto total invertido en desarrolladores con residencia en Argentina es: ',montoArgentina);

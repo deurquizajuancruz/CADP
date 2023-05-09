@@ -53,11 +53,11 @@ begin
 	leerDesarrollador(d);
 	while (d.codigoProyecto<>-1) do begin
 		case d.rolProyecto of
-			1: montoDesarrolador=d.horas*montoAnalista;
-			2: montoDesarrolador=d.horas*montoProgramador;
-			3: montoDesarrolador=d.horas*montoAdministradorBases;
-			4: montoDesarrolador=d.horas*montoArquitecto;
-			5: montoDesarrolador=d.horas*montoAdministradorRedes;
+			1: montoDesarrolador:=d.horas*montoAnalista;
+			2: montoDesarrolador:=d.horas*montoProgramador;
+			3: montoDesarrolador:=d.horas*montoAdministradorBases;
+			4: montoDesarrolador:=d.horas*montoArquitecto;
+			5: montoDesarrolador:=d.horas*montoAdministradorRedes;
 		end;
 		if (d.rolProyecto=3) then horasAdministradores+=d.horas;
 		if (d.rolProyecto=4) then v[d.codigoProyecto].cantidadArquitectos+=1;

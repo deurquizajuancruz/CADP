@@ -45,7 +45,7 @@ end;
 procedure procesarProyectos(var v:vectorProyectos);
 var
 	d:desarrollador;
-	montoArgentina:real;
+	montoDesarrolador,montoArgentina:real;
 	horasAdministradores:real;
 begin
 	montoArgentina:=0;
@@ -53,15 +53,16 @@ begin
 	leerDesarrollador(d);
 	while (d.codigoProyecto<>-1) do begin
 		case d.rolProyecto of
-			1: v[d.codigoProyecto].montoInvertido+=d.horas*montoAnalista;
-			2: v[d.codigoProyecto].montoInvertido+=d.horas*montoProgramador;
-			3: v[d.codigoProyecto].montoInvertido+=d.horas*montoAdministradorBases;
-			4: v[d.codigoProyecto].montoInvertido+=d.horas*montoArquitecto;
-			5: v[d.codigoProyecto].montoInvertido+=d.horas*montoAdministradorRedes;
+			1: montoDesarrolador=d.horas*montoAnalista;
+			2: montoDesarrolador=d.horas*montoProgramador;
+			3: montoDesarrolador=d.horas*montoAdministradorBases;
+			4: montoDesarrolador=d.horas*montoArquitecto;
+			5: montoDesarrolador=d.horas*montoAdministradorRedes;
 		end;
 		if (d.rolProyecto=3) then horasAdministradores+=d.horas;
 		if (d.rolProyecto=4) then v[d.codigoProyecto].cantidadArquitectos+=1;
-		if (d.pais='Argentina') then montoArgentina+=v[d.codigoProyecto].montoInvertido;
+		v[d.codigoProyecto].montoInvertido+=montoDesarrolador;
+		if (d.pais='Argentina') then montoArgentina+=montoDesarrolador;
 		leerDesarrollador(d);
 	end;
 	writeln('El monto total invertido en desarrolladores con residencia en Argentina es: ',montoArgentina);

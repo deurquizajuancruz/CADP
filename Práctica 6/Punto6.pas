@@ -1,25 +1,19 @@
 program Punto6Practica6;
 type
 	sonda = record
-	nombre:string;
-	duracion:real;
-	costoc:real;
-	costom:real;
-	tipor:integer;
-end;
+		nombre:string;
+		duracion:integer;
+		costoC:real;
+		costoM:real;
+		tipor:integer;
+	end;
 	rango=array [1..7] of integer;
 	lista=^nodo;
 	nodo =record
-	elem:sonda;
-	sig:lista
-end;
-procedure inicializar (var r: rango);
-var
-	i:integer;
-begin
-	for i:=1 to 7 do
-		r[i]:=0;
-end;
+		elem:sonda;
+		sig:lista;
+	end;
+
 procedure leersonda (var s:sonda);
 begin
 	writeln('Ingrese el nombre de la sonda: ');
@@ -33,6 +27,7 @@ begin
 	writeln('Ingrese el rango de la sonda(del 1 al 7): ');
 	readln(s.tipor);
 end;
+
 procedure agregarnodo (var L:lista;s:sonda);
 var
 	aux:lista;
@@ -42,21 +37,7 @@ begin
 	aux^.sig:=L;
 	L:=aux;
 end;
-procedure contar(var r:rango;tiporango:integer);
-begin
-	r[tiporango]:=r[tiporango]+1;
-end;
-procedure maxsonda (s:sonda;var max:real;var nombremax:string);
-var
-	costototal:real;
-begin
-	costototal:=(s.costoc + (s.costom*s.duracion));
-	if (costototal>max) then
-		begin
-		max:=costototal;
-		nombremax:=s.nombre;
-		end;
-end;
+
 procedure generarlista (var l:lista;var dpromedio,cpromedio:real);
 var
 	s:sonda;
@@ -66,13 +47,14 @@ begin
 	repeat
 		leersonda(s);
 		agregarnodo(l,s);
-		dpromedio:=(dpromedio + l^.elem.duracion);
-		cantidad:= cantidad +1;
-		cpromedio:=(cpromedio + l^.elem.costoc + (l^.elem.costom*l^.elem.duracion));
+		dpromedio+= l^.elem.duracion;
+		cantidad+=1;
+		cpromedio+= l^.elem.costoc + (l^.elem.costom*l^.elem.duracion);
 	until (s.nombre='Gaia');
-	dpromedio:=(dpromedio/cantidad);
-	cpromedio:=(cpromedio/cantidad);
+	dpromedio/=cantidad;
+	cpromedio/=cantidad;
 end;
+
 procedure imprimirrango(r:rango);
 var
 	i:integer;
@@ -80,6 +62,26 @@ begin
 	for i:=1 to 7 do
 		writeln('La cantidad de sondas con el rango numero ',i,' fue de: ',r[i]);
 end;
+
+procedure inicializar (var r: rango);
+var
+	i:integer;
+begin
+	for i:=1 to 7 do
+		r[i]:=0;
+end;
+
+procedure maxsonda (s:sonda;var max:real;var nombremax:string);
+var
+	costototal:real;
+begin
+	costototal:=(s.costoc + (s.costom*s.duracion));
+	if (costototal>max) then begin
+		max:=costototal;
+		nombremax:=s.nombre;
+	end;
+end;
+
 procedure recorrerLista (l:lista;duracionp,costop:real);
 var
 	max:real;
@@ -89,25 +91,25 @@ var
 begin
 	max:=-1;mayorduracion:=0;
 	inicializar(r);
-	while (l<>nil) do
-		begin
+	while (l<>nil) do begin
 		maxsonda(l^.elem,max,nombremax);
-		contar(r,l^.elem.tipor);
+		r[l^.elem.tipor]+=1;
 		if (l^.elem.duracion>duracionp) then
-			mayorduracion:=mayorduracion +1;
+			mayorduracion+=1;
 		if (l^.elem.costoc>costop) then
-			writeln('La sonda con nombre ',l^.elem.nombre,' tiene un costo de construccion mayor al costo promedio de todas las sondas');
+			writeln('La sonda con nombre ',l^.elem.nombre,' tiene un costo de construccion mayor al costo promedio de todas las sondas.');
 		l:=l^.sig;
-		end;
+	end;
 	imprimirrango(r);
 	writeln('El nombre de la sonda mas costosa es: ',nombremax);
 	writeln('La cantidad de sondas cuya duracion supera al promedio de todas las sondas es de: ',mayorduracion);
 end;
+
 var
 	l:lista;
-	duracionp,costop:real;
+	duracionP,costoP:real;
 begin
 	l:=nil;
-	generarlista(l,duracionp,costop);
+	generarlista(l,duracionP,costoP);
 	recorrerLista(l,duracionp,costop);
 end.

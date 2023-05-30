@@ -36,44 +36,36 @@ end;
 function mayorAMenor(l:lista):boolean;
 var
     num:integer;
-    ordenada:boolean;
 begin
-    ordenada:=true;
-    num:=-32760;
-    while (l<>nil) and (ordenada) do begin
-        if (l^.num>num) then 
+    mayorAMenor:=true;
+    num:=32760;
+    while (l<>nil) and (mayorAMenor) do begin
+        if (l^.num<=num) then 
             num:=l^.num
-        else begin
-            ordenada:=false;
-        end;
+        else
+            mayorAMenor:=false;
         l:=l^.sig;
     end;
-    mayorAMenor:=ordenada;
 end;
 
 function menorAMayor(l:lista):boolean;
 var
     num:integer;
-    ordenada:boolean;
 begin
-    ordenada:=true;
-    num:=32760;
-    while (l<>nil) and (ordenada) do begin
-        if (l^.num<num) then 
+    menorAMayor:=true;
+    num:=-32760;
+    while (l<>nil) and (menorAMayor) do begin
+        if (l^.num>=num) then 
             num:=l^.num
-        else begin
-            ordenada:=false;
-        end;
+        else
+            menorAMayor:=false;
         l:=l^.sig;
     end;
-    menorAMayor:=ordenada;
 end;
 
 function estaOrdenada(l:lista):boolean;
 begin
-    estaOrdenada:=false;
-    if (mayorAMenor(l) or (menorAMayor(l))) then
-        estaOrdenada:=true;
+    estaOrdenada:=(mayorAMenor(l) or menorAMayor(l));
 end;
 
 procedure eliminar(var l:lista; num:integer);
@@ -138,7 +130,7 @@ begin
     writeln('Ingrese un numero: ');
     read(valor);
     while (valor <> 0) do begin
-        insertarOrdenado(pri, valor);
+        armarNodo(pri, valor);
         writeln('Ingrese un numero: ');
         read(valor);
     end;
